@@ -70,6 +70,7 @@ typedef struct Domain_List_{
   char         page   [BUFLEN];
   char         response [4];
   unsigned int size;
+  struct tm    last_modified_time;
   struct Domain_List_ * next;
 } Domain_List;
 
@@ -193,6 +194,8 @@ int main(int argc, char* argv[]) {
     close(sock);
     freeaddrinfo(server);
 
+    printf("full messages: \n\n\n%s\n", data_buffer->buffer);
+
     // record domain info from buffer
     record_domain_info(data_buffer, cur_domain);
     
@@ -201,10 +204,6 @@ int main(int argc, char* argv[]) {
 
     // add URLs in current page into domain list
     search_url(data_buffer, head, cur_domain);
-
-
-    printf("full messages: \n\n%s\n", data_buffer->buffer);
-
 
     // move to next domain if not to retry
     if (!retry)
@@ -369,13 +368,11 @@ void receive_from_socket(int sock_fd, Data_Buffer* const data_buffer, const stru
 
 int convert_month(char* const mon)
 {
-  char *c = mon;
-  while((*c) != '\0')
+  for (char*c = mon; (*c) != '\0'; c++)
     *c = toupper((unsigned char) *c);
 
   char *all_mon = "JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC";
-  c = strstr(all_mon, mon);
-  return (int)(c - all_mon)/3;
+  return (int)(strstr(all_mon, mon) - all_mon)/3;
 }
 
 // find the last modified data of current page
@@ -400,28 +397,36 @@ int convert_month(char* const mon)
 // }
 
 // find the last modified data of current page
-void find_last_modified_date(const char* const buffer)
+struct tm find_last_modified_date(const char* const buffer)
 {
   struct tm time;
-  memset(&time, 0, sizeof(time));
-  int day;
+  int day   = 0;
   char month[4];
-  int year;
-  int hours;
-  int min;
-  int sec;
+  int year  = 0;
+  int hours = 0;
+  int min   = 0;
+  int sec   = 0;
 
-  month[3] = '\0';
-  sscanf(buffer, "Last-Modified: %*[^,], %d %s %d %d:%d:%d GMT", &day, month, &year, &hours, &min, &sec);
-  int mon = convert_month(month);
-  time.tm_sec = sec; //  int seconds after the minute  0-60*
-  time.tm_min = min; // int minutes after the hour  0-59
-  time.tm_hour = hours; // int hours since midnight  0-23
-  time.tm_mday = day; // int day of the month  1-31
-  time.tm_mon  = mon; //int months since January  0-11
-  time.tm_year = year; // int years since 1900   
-  printf("last modified time %d %s %d %d:%d:%d GMT",day, month, year, hours, min, sec);
-  return;
+  memset(&time, 0, sizeof(time));
+  memset(month, '\0', sizeof(month));
+
+
+  char* last_modified_line = strstr(buffer, "Last-Modified");
+  if (last_modified_line != NULL)
+  {
+    sscanf(last_modified_line, "Last-Modified: %*[^,], %d %[A-Za-z] %d %d:%d:%d GMT", &day, month, &year, &hours, &min, &sec);
+
+    int mon = convert_month(month);
+    time.tm_sec  = sec; //  int seconds after the minute  0-60*
+    time.tm_min  = min; // int minutes after the hour  0-59
+    time.tm_hour = hours; // int hours since midnight  0-23
+    time.tm_mday = day; // int day of the month  1-31
+    time.tm_mon  = mon; //int months since January  0-11
+    time.tm_year = year; // int years since 1900   
+  }
+
+  printf("last modified time %d %d %d %d:%d:%d GMT\n",time.tm_mday, time.tm_mon, time.tm_year, time.tm_hour, time.tm_min, time.tm_sec);
+  return time;
 }
 
 
@@ -429,7 +434,7 @@ void find_last_modified_date(const char* const buffer)
 void record_domain_info(const Data_Buffer* const data_buffer, Domain_List* const cur_domain)
 {
   cur_domain->size = data_buffer->used_buf;
-  find_last_modified_date(data_buffer->buffer);
+  cur_domain->last_modified_time = find_last_modified_date(data_buffer->buffer);
   return;
 }
 
@@ -499,6 +504,7 @@ int init_next_domain(Domain_List* head, Domain_List* cur_domain, const char* dom
 
     // initialize fields
     memset(next_domain->response, 0, sizeof(next_domain->response));
+    memset(&(next_domain->last_modified_time), 0, sizeof(next_domain->last_modified_time));
     next_domain->size = 0;
 
     // insert into list
@@ -633,12 +639,38 @@ void print_largest_page(const Domain_List* const head)
   }
 
   assert(max_domain != NULL && max_size > 0);
-  printf("The largest page is %s:%s/%s, with size of %d\n", max_domain->domain, max_domain->port, max_domain->page, max_size);
+  printf("The largest page is %s:%s/%s, with size of %d bytes (header included)\n", max_domain->domain, max_domain->port, max_domain->page, max_size);
   return;
 }
 
 void print_most_recent_modified_page(const Domain_List* const head)
 {
+  struct tm recent_time;
+  memset(&recent_time, 0, sizeof(recent_time));
+  recent_time.tm_year = 0;
+
+  time_t recent_t = mktime(&recent_time);
+  Domain_List* recent_domain = NULL;
+
+  Domain_List* cur_domain = head->next;
+  while(cur_domain != NULL)
+  {
+    time_t last_modified_t = mktime(&(cur_domain->last_modified_time));
+
+    if (difftime(last_modified_t, recent_t) > 0) // last_modified_t later than recent_t
+    {
+      recent_t = last_modified_t;
+      recent_time = cur_domain->last_modified_time;
+      recent_domain = cur_domain;
+    }
+    cur_domain = cur_domain->next;
+  }
+
+  assert(recent_domain != NULL);
+
+  printf("Most resent modified page: %s:%s/%s, modified in D/M/Y %d/%d/%d, h/m/s %d:%d:%d GMT\n", 
+          recent_domain->domain, recent_domain->port, recent_domain->page, 
+          recent_time.tm_mday, recent_time.tm_mon, recent_time.tm_year, recent_time.tm_hour, recent_time.tm_min, recent_time.tm_sec);
   return;
 }
 
