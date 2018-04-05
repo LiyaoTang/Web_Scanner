@@ -16,9 +16,9 @@
 #define BUFLEN 64
 #define PROG "client"
 
-#define SERVER "localhost"
+// #define SERVER "localhost"
 
-// #define SERVER "130.56.233.28"
+#define SERVER "130.56.233.28"
 // #define SERVER "2001:0:9d38:6abd:889:24d0:7dc7:16e3%2"
 
 // #define SERVER "150.203.24.13" /*partch*/
@@ -53,7 +53,7 @@ void resourceError(int status, char *caller) {
 #endif
 
 int main(int argc, char* argv[]) {
-  char *port;
+  const char *port = (argc == 1)? PORT: argv[1];
   int err, nbytes;
   int sock;                       // client socket
   struct addrinfo hints, *server;
@@ -62,7 +62,6 @@ int main(int argc, char* argv[]) {
   char serverinfo[128], hostinfo[128];
   char buf[BUFLEN];
 
-  port = (argc == 1)? PORT: argv[1];
   
 
 #define A_FAMILY AF_UNSPEC
@@ -128,7 +127,7 @@ int main(int argc, char* argv[]) {
     resourceError(nbytes, "recv");
   assert(nbytes <= sizeof(buf)); //check against buffer overflow!
   buf[MIN(nbytes, sizeof(buf)-1)] = 0;
-  
+
   // do not trust server to send a null-terminated string either!  
   printf("%s: received message (%d bytes): %s\n", PROG, nbytes, buf);
 
