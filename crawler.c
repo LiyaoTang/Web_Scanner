@@ -4,8 +4,9 @@ Readme.md:
 
 The work is down based on the lab02 instructions and the assignment instruction.
 The default website to start the crawling is the "3310exp.hopto.org:9780/".
-To start from a different website "domain:port/page", you can run the program as "./crawler domain port page". For example, to start 
-from "3310exp.hopto.org:9780/20/25.html", run the program as "./crawler 3310exp.hopto.org 9780 20/25.html".
+Note that 'make run' command will only start from the default server. To start from a different website "domain:port/page", 
+you can run the program as "./crawler domain port page". For example, to start from "3310exp.hopto.org:9780/20/25.html", 
+run the complied program as "./crawler 3310exp.hopto.org 9780 20/25.html".
 
 The crawler default to use TCP connection and will switch to UDP if EAI_SERVICE is reported in 'getaddrinfo()', but this function
 is not tested against any server yet.
@@ -16,13 +17,15 @@ any single packet is smaller than BUFLEN (default to 4096) bytes. This function 
 The information of each web site is recored in a link list structure 'Domain_List' and each page will be only recorded once. Web pages 
 are recorded only in their IP addresses to avoid duplicate, assuming that one web page's IP address can hardly change during the 
 execution time of this simple crawler. That is, Two pages will be viewed as the same page if they lead to the same IP address during 
-the execution of my crawler.
+the execution of my crawler. While maintaining the list, crawler visits web pages in a DFS style.
 
 The required result will be printed at the end and some intermediate results will be printed.
 To be more specific, the required number of page is counted as unique pages ever visited by the crawler. 
 The largest page is the page with the longest content length, instead of the whole received message. 
 The most-recently modified page is the page with largest Last-Modified time which is stored in type 'struct tm' and is converted 
 into type 'time_t' using 'mk_time()' in comparison.
+
+Finally, the crawler is built and tested successfully on the lab machine against the friendly test server.
 
 */
 
@@ -506,7 +509,7 @@ struct tm find_last_modified_date(const char* const buffer)
     time.tm_year = year; // int years since 1900   
   }
 
-  printf("last modified time %d %d %d %d:%d:%d GMT\n",time.tm_mday, time.tm_mon, time.tm_year, time.tm_hour, time.tm_min, time.tm_sec);
+  printf("last modified time %d %d %d %d:%d:%d GMT\n",time.tm_mday, time.tm_mon+1, time.tm_year, time.tm_hour, time.tm_min, time.tm_sec);
   return time;
 }
 
@@ -529,6 +532,7 @@ void record_http_response(const Data_Buffer* const data_buffer, Domain_List* con
   const char* buffer = data_buffer->buffer;
   sscanf(buffer, "HTTP/%*d.%*d %s\n", cur_domain->response); // parse header
   cur_domain->response[3] = '\0';
+	printf("response: %s\n", cur_domain->response);
 }
 
 // find all urls in returned message & insert into domain list & into the redirected pate if necessary
@@ -573,9 +577,9 @@ void search_url(const Data_Buffer* const data_buffer, Domain_List* head, Domain_
 void record_domain_info(const Data_Buffer* const data_buffer, Domain_List* const cur_domain, Domain_List* const head)
 {
   assert(cur_domain != NULL && head != NULL);
+  record_http_response(data_buffer, cur_domain);                                  // record HTTP response
   cur_domain->size = find_content_length(data_buffer->buffer);                    // record size
   cur_domain->last_modified_time = find_last_modified_date(data_buffer->buffer);  // record last modified time
-  record_http_response(data_buffer, cur_domain);                                  // record HTTP response
   search_url(data_buffer, head, cur_domain);                                      // serach url & insert into correct places
 
   return;
