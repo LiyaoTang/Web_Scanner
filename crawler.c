@@ -1,5 +1,29 @@
-/* simple TCP client for comp3310
- * Peter Strazdins, RSCS ANU, 04/14; updated 03/18
+/* Simple Web Crawler - u6142160 Liyao Tang
+
+Readme.md:
+
+The work is down based on the lab02 instructions and the assignment instruction.
+The default website to start the crawling is the "3310exp.hopto.org:9780/".
+To start from a different website "domain:port/page", you can run the program as "./crawler domain port page". For example, to start 
+from "3310exp.hopto.org:9780/20/25.html", run the program as "./crawler 3310exp.hopto.org 9780 20/25.html".
+
+The crawler default to use TCP connection and will switch to UDP if EAI_SERVICE is reported in 'getaddrinfo()', but this function
+is not tested against any server yet.
+
+The crawler will receive all messages sent from server using a dynamic-array-like structure 'Data_Buffer', assuming the message in 
+any single packet is smaller than BUFLEN (default to 4096) bytes. This function is unfortunately not tested again.
+
+The information of each web site is recored in a link list structure 'Domain_List' and each page will be only recorded once. Web pages 
+are recorded only in their IP addresses to avoid duplicate, assuming that one web page's IP address can hardly change during the 
+execution time of this simple crawler. That is, Two pages will be viewed as the same page if they lead to the same IP address during 
+the execution of my crawler.
+
+The required result will be printed at the end. 
+To be more specific, the required number of page is counted as unique pages ever visited by the crawler. 
+The largest page is the page with the longest content length, instead of the whole received message. 
+The most-recently modified page is the page with largest Last-Modified time which is stored in type 'struct tm' and is converted 
+into type 'time_t' using 'mk_time()' in comparison.
+
 */
 
 #include <stdio.h>
@@ -16,38 +40,12 @@
 #include <time.h>      // strptime()
 #include <ctype.h>     // toupper()
 
-
-
-#if 0
-#define SYSCALL_CHECK(rv, failCond, caller, args) \
-  do { \
-    if (((rv) = caller args) failCond) \
-      resourceError(rv, #caller); \
-  } while (0)
-// you can use this to make the C code to make and check a syscall
-// more succinct. For example:
-  SYSCALL_CHECK(sock, < 0, socket, (server->ai_family, server->ai_socktype, server->ai_protocol));
-// is equivalent to:
-  sock = socket(server->ai_family, server->ai_socktype, server->ai_protocol);
-  if (sock < 0)
-    resourceError(sock, "socket");
-*/
-#endif
-
-// The number of pages
-// The largest page (and size)
-// The most-recently modified page (and its date/time)
-// A list of invalid pages (not) found (404)
-// A list of redirected pages found (30x) and where they redirect to
-
 #define BUFLEN 4096
-#define PROG "client"
+#define PROG "web crawler"
 
 #define MIN(a, b) ((a) <= (b)? (a): (b))
 
 void resourceError(int status, char *caller);
-
-void send_to_socket(int sock, const char* request, int print);
 
 typedef struct Data_Buffer_{
   char* restrict buffer;
@@ -71,6 +69,7 @@ typedef struct Domain_List_{
   char         response [4];
   unsigned int size;
   struct tm    last_modified_time;
+  struct Domain_List_ * redirected_page;  
   struct Domain_List_ * next;
 } Domain_List;
 
@@ -78,14 +77,11 @@ Domain_List* create_domain_list_head();
 int init_next_domain(Domain_List* head, Domain_List* cur_domain, const char* domain, const char* port, const char* page);
 Domain_List* free_cur_domain(Domain_List* const head, Domain_List* cur_domain);
 
-void record_domain_info(const Data_Buffer* const data_buffer, Domain_List* const cur_domain);
-int get_http_response(Data_Buffer* const data_buffer, Domain_List* cur_domain);
-void search_url(Data_Buffer* const data_buffer, Domain_List* head, Domain_List* cur_domain);
+void record_domain_info(const Data_Buffer* const data_buffer, Domain_List* const cur_domain, Domain_List* const head);
 
-int is_same_domain(const Domain_List* const L, const Domain_List* const R);
 unsigned int count_pages(const Domain_List* const head);
 
-void print_302_pages(const Domain_List* const head);
+void print_redirected_pages(const Domain_List* const head);
 void print_404_pages(const Domain_List* const head);
 void print_largest_page(const Domain_List* const head);
 void print_most_recent_modified_page(const Domain_List* const head);
@@ -98,22 +94,22 @@ int main(int argc, char* argv[]) {
   // Usage:
   // `./clientAddr init_domain init_port init_page` to start crawling from website: init_domain:init_port/init_page
   // to use other request format, sepcify the format in the 4th argument.
-  const char* const init_domain = (argc == 3)? argv[1] : "3310exp.hopto.org";
-  const char* const init_port   = (argc == 3)? argv[2] : "9780";
-  const char* const init_page   = (argc == 3)? argv[3] : "";
-  const char* const format      = (argc == 4)? argv[4] : "GET /%s HTTP/1.0\r\n\r\n";
-
+  const char* const init_domain = (argc == 4)? argv[1] : "3310exp.hopto.org";
+  const char* const init_port   = (argc == 4)? argv[2] : "9780";
+  const char* const init_page   = (argc == 4)? argv[3] : "";
+  const char* const format      = (argc == 5)? argv[4] : "GET /%s HTTP/1.0\r\n\r\n";
   int err = 0;
 
   // Initialize domain list
+  printf("starting from: ");
   Domain_List* head = create_domain_list_head();
   Domain_List* cur_domain = head;
   init_next_domain(head, cur_domain, init_domain, init_port, init_page);
   cur_domain = cur_domain->next;
-
+  printf("\n----------------------------------------\n\n");
+  
   // DFS
-  int cnt = 0;
-  while (cur_domain != NULL && cnt < 100)
+  while (cur_domain != NULL)
   {
     int nbytes              = 0;
     int sock                = 0;   // client socket
@@ -124,7 +120,7 @@ int main(int argc, char* argv[]) {
     // resolve domain
     server = resolve_domain(cur_domain->domain, cur_domain->port, server, 0);
 
-    // create the client's end socket
+    // create the client's end socket & connect if using TCP
     do {
 
       // get the socket, which must have the same family, type & protocol
@@ -152,12 +148,10 @@ int main(int argc, char* argv[]) {
           close(sock);
         else break;
       }
-      
+
       server = server->ai_next;
-    
     } while (server != NULL);
-    if (server == NULL)
-      resourceError(err, "connect");
+    if (server == NULL) resourceError(err, "connect");
 
     // --- debug output : ensure the right server (socket's address) is connected ---
     // get the socket's address into corresponding variables
@@ -194,25 +188,19 @@ int main(int argc, char* argv[]) {
     close(sock);
     freeaddrinfo(server);
 
-    printf("full messages: \n\n\n%s\n", data_buffer->buffer);
+    // debug output : print out the full message received from server ---  
+    // printf("full messages: \n\n\n%s\n", data_buffer->buffer);
 
     // record domain info from buffer
-    record_domain_info(data_buffer, cur_domain);
-    
-    // check response from server
-    int retry = get_http_response(data_buffer, cur_domain);
-
-    // add URLs in current page into domain list
-    search_url(data_buffer, head, cur_domain);
+    record_domain_info(data_buffer, cur_domain, head);
 
     // move to next domain if not to retry
-    if (!retry)
+    if (strcmp(cur_domain->response, "503"))
     {
       cur_domain = cur_domain->next;
-      cnt ++;
-      printf("----------------------------------------\n\n\n\n\n");
+      printf("\n----------------------------------------\n\n");
     }
-    else printf("retry...\n");
+    else printf("retry on 503...\n");
 
     // clean up current data buffer
     free_data_buffer(data_buffer);
@@ -221,7 +209,8 @@ int main(int argc, char* argv[]) {
     sleep(3);
   }
 
-  printf("%s: web crawler stopped, giving out result:\n", PROG);
+  printf("%s: stopped crawling, giving out result:\n\n", PROG);
+  printf("\n");
 
   printf("In total %d unique pages encountered.\n", count_pages(head));
   printf("\n");
@@ -232,7 +221,7 @@ int main(int argc, char* argv[]) {
   print_most_recent_modified_page(head);
   printf("\n");
 
-  print_302_pages(head);
+  print_redirected_pages(head);
   printf("\n");
 
   print_404_pages(head);
@@ -246,19 +235,6 @@ void resourceError(int status, char *caller)
   printf("%s: resource error status=%d\n", PROG, status);
   perror(caller);
   exit(2);
-}
-
-// wrapper for send(2) => print info for debug use
-void send_to_socket(int sock, const char* request, int print)
-{
-  int nbytes = send(sock, request, sizeof(request), 0);
-  if (nbytes < 0) 
-    resourceError(nbytes, "send");
-  if (print)
-  {
-    printf("%s: sent message (%d bytes, original size %ld):\n", PROG, nbytes, sizeof(request));
-    printf("%s\n", request);    
-  }
 }
 
 // initialize data buffer (of initial size BUFLEN)
@@ -366,13 +342,108 @@ void receive_from_socket(int sock_fd, Data_Buffer* const data_buffer, const stru
     }
 }
 
-int convert_month(char* const mon)
+// create a head of a domain list
+Domain_List* create_domain_list_head()
 {
-  for (char*c = mon; (*c) != '\0'; c++)
-    *c = toupper((unsigned char) *c);
+  Domain_List* head = (Domain_List*)malloc(sizeof(Domain_List));
+  head->next = NULL;
+  return head;
+}
 
-  char *all_mon = "JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC";
-  return (int)(strstr(all_mon, mon) - all_mon)/3;
+// initialize a new domain with given domain, port & page
+Domain_List* new_domain(const char* domain, const char* port, const char* page)
+{
+  Domain_List* new_domain = (Domain_List*)malloc(sizeof(Domain_List));
+
+  // ensure enough space of domain, port, page
+  if (strlen(domain) >= sizeof(new_domain->domain) || strlen(port) >= sizeof(new_domain->port) || strlen(page) >= sizeof(new_domain->page))
+  {
+    printf("new domain: len(domain_IP)=%ld / len(port)=%ld / len(page)=%ld exceed corresponding size of %ld %ld %ld\n", 
+            strlen(domain), strlen(port), strlen(page), sizeof(new_domain->domain), sizeof(new_domain->port), sizeof(new_domain->page));
+
+    printf("domain: %s, port: %s, page: %s\n", domain, port, page);
+    exit(2);
+  }
+
+  // copy into fields
+  snprintf(new_domain->domain, sizeof(new_domain->domain), "%s", domain);
+  snprintf(new_domain->port, sizeof(new_domain->port), "%s", port);
+  snprintf(new_domain->page, sizeof(new_domain->page), "%s", page);
+
+  // initialize fields
+  memset(new_domain->response, 0, sizeof(new_domain->response));
+  memset(&(new_domain->last_modified_time), 0, sizeof(new_domain->last_modified_time));
+  new_domain->size = 0;
+  new_domain->redirected_page = NULL;
+  new_domain->next = NULL;
+
+  return new_domain;
+}
+
+// ensure the domain not discoved before & insert it into the domain list
+int init_next_domain(Domain_List* head, Domain_List* cur_domain, const char* domain, const char* port, const char* page)
+{
+  // get IP address
+  struct addrinfo *server = NULL;
+  server = resolve_domain(domain, port, server, 0);
+  if (server == NULL) // not successfully resolved => skip
+    return 0;
+    
+  // copy IP address into buffer, '\0' ends ensured
+  char domain_IP[BUFLEN]; 
+  memset(domain_IP, 0, sizeof(domain_IP));
+  int nbytes = snprintf(domain_IP, sizeof(domain_IP), "%s", inet_ntoa(((struct sockaddr_in*)(server->ai_addr))->sin_addr));
+  if (nbytes > sizeof(domain_IP) || nbytes < 0) resourceError(nbytes, "init_next_domain - copy IP failed");
+
+  // free resource
+  freeaddrinfo(server);
+
+  // check if the given domain is visited before
+  int is_new = 1;
+  Domain_List* past_domain = head->next;
+  while (past_domain != NULL)
+  {
+    if (!strcmp(past_domain->domain, domain_IP) && !strcmp(past_domain->port, port) && !strcmp(past_domain->page, page))
+    {
+      is_new = 0;
+      break;
+    }
+    past_domain = past_domain->next;
+  }
+
+  // insert into the list if new domain discovered
+  printf("%s:%s/%s - IP: %s", domain, port, page, domain_IP);
+
+  if (is_new)
+  {
+    // create new domain, using IP address
+    Domain_List* next_domain = new_domain(domain_IP, port, page);
+
+    // insert into list
+    next_domain->next = cur_domain->next;
+    cur_domain->next  = next_domain;
+  }
+  else
+    printf(" --- duplicate");
+  
+  printf("\n");
+
+  return is_new;
+}
+
+// depose the current domain, returned the next domain
+Domain_List* free_cur_domain(Domain_List* const head, Domain_List* cur_domain)
+{
+  assert(cur_domain != NULL);
+  Domain_List* next_domain = cur_domain->next;
+  Domain_List* last_domain = head;
+  while(last_domain->next != cur_domain) last_domain = last_domain->next;
+
+  last_domain->next = next_domain;
+
+  free(cur_domain->redirected_page);
+  free(cur_domain);
+  return next_domain;
 }
 
 // find the last modified data of current page
@@ -395,6 +466,16 @@ int convert_month(char* const mon)
 
 //   return;
 // }
+
+// convert month 3-letter abbr into int (0-11)
+int convert_month(char* const mon)
+{
+  for (char*c = mon; (*c) != '\0'; c++)
+    *c = toupper((unsigned char) *c);
+
+  char *all_mon = "JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC";
+  return (int)(strstr(all_mon, mon) - all_mon)/3;
+}
 
 // find the last modified data of current page
 struct tm find_last_modified_date(const char* const buffer)
@@ -429,128 +510,32 @@ struct tm find_last_modified_date(const char* const buffer)
   return time;
 }
 
-
-// record info (size, last-update) of current page (in the data buffer) into the current node in domain list
-void record_domain_info(const Data_Buffer* const data_buffer, Domain_List* const cur_domain)
+unsigned int find_content_length(const char* const buffer)
 {
-  cur_domain->size = data_buffer->used_buf;
-  cur_domain->last_modified_time = find_last_modified_date(data_buffer->buffer);
-  return;
-}
-
-
-// create a head of a domain list
-Domain_List* create_domain_list_head()
-{
-  Domain_List* head = (Domain_List*)malloc(sizeof(Domain_List));
-  head->next = NULL;
-  return head;
-}
-
-// ensure the domain not discoved before & insert it into the first position of the domain list 
-// limit: 1. need to call BEFORE updating cur_domain (assuming current domain is discovered)
-//        2. not checking duplicate links inside current page
-int init_next_domain(Domain_List* head, Domain_List* cur_domain, const char* domain, const char* port, const char* page)
-{
-  // get IP address
-  struct addrinfo *server = NULL;
-  server = resolve_domain(domain, port, server, 0);
-  if (server == NULL) // not successfully resolved => skip
-    return 0;
-    
-  // copy IP address into buffer, '\0' ends ensured
-  char domain_IP[BUFLEN]; 
-  memset(domain_IP, 0, sizeof(domain_IP));
-  int nbytes = snprintf(domain_IP, sizeof(domain_IP), "%s", inet_ntoa(((struct sockaddr_in*)(server->ai_addr))->sin_addr));
-  if (nbytes > sizeof(domain_IP) || nbytes < 0) resourceError(nbytes, "init_next_domain - copy IP failed");
-
-  // free resource
-  freeaddrinfo(server);
-
-  // check if the new domain is visited before
-  int is_new = 1;
-  Domain_List* past_domain = head->next;
-  while (past_domain != NULL && past_domain != cur_domain->next)
+  unsigned int content_length = 0;
+  char* last_modified_line = strstr(buffer, "Content-Length");
+  if (last_modified_line != NULL)
   {
-    if (!strcmp(past_domain->domain, domain_IP) && !strcmp(past_domain->port, port) && !strcmp(past_domain->page, page))
-    {
-      is_new = 0;
-      break;
-    }
-
-    past_domain = past_domain->next;
+    sscanf(last_modified_line, "Content-Length: %d", &content_length);
   }
 
-  // insert into the list if new website discovered
-  printf("%s:%s/%s - IP: %s", domain, port, page, domain_IP);
-
-  if (is_new)
-  {
-    Domain_List* next_domain = (Domain_List*)malloc(sizeof(Domain_List));
-
-    // ensure enough space of domain, port, page
-    if (strlen(domain_IP) >= BUFLEN || strlen(port) >= BUFLEN || strlen(page) >= BUFLEN)
-    {
-      printf("init_next_domain: len(domain_IP)=%ld / len(port)=%ld / len(page)=%ld exceed BUFLEN %d\n", 
-              strlen(domain_IP), strlen(port), strlen(page), BUFLEN);
-      printf("domain: %s, IP: %s, port: %s, page: %s\n", domain, domain_IP, port, page);
-      exit(2);
-    }
-
-    // copy into fields
-    snprintf(next_domain->domain, sizeof(next_domain->domain), "%s", domain_IP);
-    snprintf(next_domain->port, sizeof(next_domain->port), "%s", port);
-    snprintf(next_domain->page, sizeof(next_domain->page), "%s", page);
-
-    // initialize fields
-    memset(next_domain->response, 0, sizeof(next_domain->response));
-    memset(&(next_domain->last_modified_time), 0, sizeof(next_domain->last_modified_time));
-    next_domain->size = 0;
-
-    // insert into list
-    next_domain->next = cur_domain->next;
-    cur_domain->next  = next_domain;
-  }
-  else
-    printf(" --- duplicate");
-  
-  printf("\n");
-
-  return is_new;
+  printf("content length: %d\n", content_length);
+  return content_length;
 }
 
-// depose the current domain, returned the next domain
-Domain_List* free_cur_domain(Domain_List* const head, Domain_List* cur_domain)
-{
-  assert(cur_domain != NULL);
-  Domain_List* next_domain = cur_domain->next;
-  Domain_List* last_domain = head;
-  while(last_domain->next != cur_domain) last_domain = last_domain->next;
-
-  last_domain->next = next_domain;
-
-  // free(cur_domain->domain);
-  // free(cur_domain->port);
-  // free(cur_domain->page);
-  // free(cur_domain->response);
-  free(cur_domain);
-  return next_domain;
-}
-
-
-// check if the request is successful & record the response & re-try if needed
-int get_http_response(Data_Buffer* const data_buffer, Domain_List* cur_domain)
+// check if the request is successful & record the response
+void record_http_response(const Data_Buffer* const data_buffer, Domain_List* const cur_domain)
 {
   const char* buffer = data_buffer->buffer;
   sscanf(buffer, "HTTP/%*d.%*d %s\n", cur_domain->response); // parse header
   cur_domain->response[3] = '\0';
-
-  return !strcmp(cur_domain->response, "503");
 }
 
-// parse the returned data & find all urls in it & insert into domain list (if not duplicate)
-void search_url(Data_Buffer* const data_buffer, Domain_List* head, Domain_List* cur_domain)
+// find all urls in returned message & insert into domain list & into the redirected pate if necessary
+void search_url(const Data_Buffer* const data_buffer, Domain_List* head, Domain_List* cur_domain)
 {
+  printf("finding urls...\n");
+
   const char* cur_pos = data_buffer->buffer;
   while ((cur_pos = strstr(cur_pos, "<a href=\"http://")) != NULL)
   {
@@ -574,27 +559,42 @@ void search_url(Data_Buffer* const data_buffer, Domain_List* head, Domain_List* 
     else
       sscanf(url, "%[^:]:%[^/]", domain, port);
 
-    // try to insert into domain list
+    // try to insert into the list
     init_next_domain(head, cur_domain, domain, port, page);
+    if (cur_domain->response[0] == '3' && cur_domain->response[1] == '0') // record the redirected page if 30x
+    {
+      assert(cur_domain->redirected_page == NULL);
+      cur_domain->redirected_page = new_domain(domain, port, page);
+    }
   }
 }
 
-void print_302_pages(const Domain_List* const head)
+// record info (size, last-update) of current page (in the data buffer) into the current node in domain list
+void record_domain_info(const Data_Buffer* const data_buffer, Domain_List* const cur_domain, Domain_List* const head)
+{
+  assert(cur_domain != NULL && head != NULL);
+  cur_domain->size = find_content_length(data_buffer->buffer);                    // record size
+  cur_domain->last_modified_time = find_last_modified_date(data_buffer->buffer);  // record last modified time
+  record_http_response(data_buffer, cur_domain);                                  // record HTTP response
+  search_url(data_buffer, head, cur_domain);                                      // serach url & insert into correct places
+
+  return;
+}
+
+void print_redirected_pages(const Domain_List* const head)
 {
   printf("redirected pages: \n");
   int cnt = 0;
   Domain_List* cur_domain = head->next;
   while(cur_domain != NULL)
   {
-    if (!strcmp(cur_domain->response, "302"))
+    if (cur_domain->response[0] == '3' && cur_domain->response[1] == '0')
     {
-      Domain_List* next_domain = cur_domain->next;
-      if (next_domain != NULL)
-      {
-        cnt ++;
-        printf("%d: %s:%s/%s redirected to %s:%s/%s\n", 
-                cnt, cur_domain->domain, cur_domain->port, cur_domain->page, next_domain->domain, next_domain->port, next_domain->page);
-      }
+      assert(cur_domain->redirected_page != NULL);
+      cnt ++;
+      printf("%d: %s:%s/%s redirected to %s:%s/%s\n", 
+              cnt, cur_domain->domain, cur_domain->port, cur_domain->page, 
+              cur_domain->redirected_page->domain, cur_domain->redirected_page->port, cur_domain->redirected_page->page);
     }
     cur_domain = cur_domain->next;
   }
@@ -639,7 +639,7 @@ void print_largest_page(const Domain_List* const head)
   }
 
   assert(max_domain != NULL && max_size > 0);
-  printf("The largest page is %s:%s/%s, with size of %d bytes (header included)\n", max_domain->domain, max_domain->port, max_domain->page, max_size);
+  printf("The largest page is %s:%s/%s, with size of %d bytes (header excluded)\n", max_domain->domain, max_domain->port, max_domain->page, max_size);
   return;
 }
 
@@ -684,12 +684,6 @@ void print_all_links(const Domain_List* const head)
   }
 }
 
-
-int is_same_domain(const Domain_List* const L, const Domain_List* const R)
-{
-  return (!strcmp(L->domain, R->domain) && !strcmp(L->port, R->port) && !strcmp(L->page, R->page));
-}
-
 unsigned int count_pages(const Domain_List* const head)
 {
   unsigned int cnt = 0;
@@ -697,21 +691,7 @@ unsigned int count_pages(const Domain_List* const head)
 
   while(cur_domain != NULL)
   {
-    // check duplicate domain => count them for only once
-    unsigned int is_unique = 1;
-    Domain_List* other_domain = cur_domain->next;
-
-    while(other_domain != NULL)
-    {
-      if (is_same_domain(cur_domain, other_domain))
-      {
-        is_unique = 0;
-        break;
-      }
-      other_domain = other_domain->next;
-    }
-
-    cnt += is_unique;
+    cnt ++;
     cur_domain = cur_domain->next;
   }
 
