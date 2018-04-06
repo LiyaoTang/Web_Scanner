@@ -6,7 +6,7 @@ The work is down based on the lab02 instructions and the assignment instruction.
 
 The crawler default to use TCP connection and will switch to UDP if EAI_SERVICE is reported in 'getaddrinfo()', but this function is not tested against any server yet.
 
-The crawler will receive all messages sent from server using a dynamic-array-like structure 'Data_Buffer', assuming the message in any single packet is smaller than BUFLEN (default to 4096) bytes. This function is unfortunately not tested again.
+The crawler will receive all messages sent from server using a dynamic-array-like structure 'Data_Buffer', assuming the message in any single packet is smaller than BUFLEN (default to 4096) bytes. This function is designed in case that a large website arrives in multiple packets but is unfortunately not tested again.
 
 The information of each web site is recored in a link list structure 'Domain_List' and each page will be only recorded once. Web pages are recorded only in their IP addresses to avoid duplicate, assuming that one web page's IP address can hardly change during the execution time of this simple crawler. That is, Two pages will be viewed as the same page if they lead to the same IP address during the execution of my crawler. While maintaining the list, crawler visits web pages in a DFS style.
 
