@@ -18,7 +18,7 @@ are recorded only in their IP addresses to avoid duplicate, assuming that one we
 execution time of this simple crawler. That is, Two pages will be viewed as the same page if they lead to the same IP address during 
 the execution of my crawler.
 
-The required result will be printed at the end. 
+The required result will be printed at the end and some intermediate results will be printed.
 To be more specific, the required number of page is counted as unique pages ever visited by the crawler. 
 The largest page is the page with the longest content length, instead of the whole received message. 
 The most-recently modified page is the page with largest Last-Modified time which is stored in type 'struct tm' and is converted 
@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
   init_next_domain(head, cur_domain, init_domain, init_port, init_page);
   cur_domain = cur_domain->next;
   printf("\n----------------------------------------\n\n");
-  
+
   // DFS
   while (cur_domain != NULL)
   {
