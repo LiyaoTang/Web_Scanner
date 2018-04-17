@@ -21,7 +21,7 @@ execution time of this simple crawler. That is, Two pages will be viewed as the 
 the execution of my crawler. While maintaining the list, crawler visits web pages in a DFS style.
 
 The required result will be printed at the end and some intermediate results will be printed.
-To be more specific, the required number of page is counted as unique URLs ever successfully resolved by the crawler, 
+To be more specific, the required number of page is counted as unique IP addresses ever successfully resolved by the crawler, 
 including 50x redirected pages and 404 not-found pages.
 The largest page is the page with the longest content length, instead of the whole received message. 
 The most-recently modified page is the page with largest Last-Modified time which is stored in type 'struct tm' and is converted 
