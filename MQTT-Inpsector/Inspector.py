@@ -196,7 +196,7 @@ def on_message_qos_0(client, userdata, msg):
         collect_1min_info(client, userdata, cur_time)
 
 def on_message_SYS(client, userdata, msg):
-    print(msg.timestamp, msg.topic, msg.payload)
+    print(time.time(), msg.topic, msg.payload)
     sys.stdout.flush()
 
 def subscribe_counter(client, userdata, speed, qos, topic=None):
