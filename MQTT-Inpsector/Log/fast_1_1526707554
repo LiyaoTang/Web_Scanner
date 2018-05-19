@@ -1,0 +1,749 @@
+sucessfully subscribe  counter/fast/q1
+received  b'close'
+info-1min:
+cnt 4616
+valid_cnt 4434
+loss_cnt 48809059
+dup_cnt 0
+mis_order_cnt 0
+cur_val 1956603
+newest_T 515031.124554404
+start_time 1526707555.2657497
+max_T 60
+
+info-1min:
+cnt 4591
+valid_cnt 4307
+loss_cnt 1943
+dup_cnt 0
+mis_order_cnt 0
+cur_val 1963137
+newest_T 515091.146323622
+start_time 1526707615.299243
+max_T 60
+
+info-1min:
+cnt 4624
+valid_cnt 4372
+loss_cnt 1672
+dup_cnt 0
+mis_order_cnt 0
+cur_val 1969433
+newest_T 515151.201520721
+start_time 1526707675.3210216
+max_T 60
+
+info-1min:
+cnt 4657
+valid_cnt 4402
+loss_cnt 1681
+dup_cnt 0
+mis_order_cnt 0
+cur_val 1975771
+newest_T 515211.220424603
+start_time 1526707735.3761215
+max_T 60
+
+info-1min:
+cnt 4658
+valid_cnt 4398
+loss_cnt 1665
+dup_cnt 0
+mis_order_cnt 0
+cur_val 1982098
+newest_T 515271.265384326
+start_time 1526707795.3951092
+max_T 60
+
+info-1min:
+cnt 4606
+valid_cnt 4385
+loss_cnt 1340
+dup_cnt 0
+mis_order_cnt 0
+cur_val 1988044
+newest_T 515331.341379245
+start_time 1526707855.4399686
+max_T 60
+
+info-1min:
+cnt 4605
+valid_cnt 4402
+loss_cnt 1164
+dup_cnt 0
+mis_order_cnt 0
+cur_val 1993824
+newest_T 515391.366071845
+start_time 1526707915.5159903
+max_T 60
+
+info-1min:
+cnt 4605
+valid_cnt 4344
+loss_cnt 1533
+dup_cnt 0
+mis_order_cnt 0
+cur_val 1999962
+newest_T 515451.444241224
+start_time 1526707975.5406792
+max_T 60
+
+info-1min:
+cnt 4675
+valid_cnt 4474
+loss_cnt 1091
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2005728
+newest_T 515511.519581107
+start_time 1526708035.618867
+max_T 60
+
+info-1min:
+cnt 4707
+valid_cnt 4510
+loss_cnt 1102
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2011537
+newest_T 515571.519946216
+start_time 1526708095.6941726
+max_T 60
+
+info-10min:
+recv 78.45
+loss 813484.3166666667
+dupe 0
+ooo 0
+start_time 1526707555.2657552
+max_T 600
+end_time 1526708155.6943955
+-------
+
+info-1min:
+cnt 4670
+valid_cnt 4442
+loss_cnt 1270
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2017477
+newest_T 515631.541634206
+start_time 1526708155.6951272
+max_T 60
+
+info-1min:
+cnt 4590
+valid_cnt 4365
+loss_cnt 1300
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2023367
+newest_T 515691.614020214
+start_time 1526708215.7162578
+max_T 60
+
+info-1min:
+cnt 4691
+valid_cnt 4509
+loss_cnt 1045
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2029103
+newest_T 515751.64405341
+start_time 1526708275.7886288
+max_T 60
+
+received  b'close'
+info-1min:
+cnt 3919
+valid_cnt 3842
+loss_cnt 16262597
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2033408
+newest_T 515811.677219755
+start_time 1526708335.8186789
+max_T 60
+
+info-1min:
+cnt 4643
+valid_cnt 4409
+loss_cnt 4069949
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2039421
+newest_T 515871.743518597
+start_time 1526708395.8518164
+max_T 60
+
+info-1min:
+cnt 4674
+valid_cnt 4495
+loss_cnt 1019
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2045114
+newest_T 515931.772909159
+start_time 1526708455.9181387
+max_T 60
+
+info-1min:
+cnt 4497
+valid_cnt 4333
+loss_cnt 866
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2050477
+newest_T 515991.797025464
+start_time 1526708515.9475262
+max_T 60
+
+info-1min:
+cnt 4543
+valid_cnt 4304
+loss_cnt 1542
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2056562
+newest_T 516051.807404471
+start_time 1526708575.971614
+max_T 60
+
+info-1min:
+cnt 4459
+valid_cnt 4219
+loss_cnt 1542
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2062563
+newest_T 516111.842610905
+start_time 1526708635.9819973
+max_T 60
+
+info-1min:
+cnt 4641
+valid_cnt 4379
+loss_cnt 1863
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2069067
+newest_T 516171.923533759
+start_time 1526708696.017295
+max_T 60
+
+info-10min:
+recv 78.18333333333334
+loss 271043.2833333333
+dupe 0
+ooo 0
+start_time 1526708155.6951303
+max_T 600
+end_time 1526708756.0981145
+-------
+
+info-1min:
+cnt 4649
+valid_cnt 4383
+loss_cnt 1785
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2075501
+newest_T 516231.956991818
+start_time 1526708756.0993307
+max_T 60
+
+info-1min:
+cnt 4385
+valid_cnt 4162
+loss_cnt 1419
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2081305
+newest_T 516291.973908324
+start_time 1526708816.1316268
+max_T 60
+
+info-1min:
+cnt 4369
+valid_cnt 4160
+loss_cnt 1286
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2086960
+newest_T 516352.043171505
+start_time 1526708876.148613
+max_T 60
+
+info-1min:
+cnt 4642
+valid_cnt 4429
+loss_cnt 1117
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2092719
+newest_T 516412.071504821
+start_time 1526708936.2178535
+max_T 60
+
+info-1min:
+cnt 4676
+valid_cnt 4436
+loss_cnt 1334
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2098740
+newest_T 516472.142116502
+start_time 1526708996.2461169
+max_T 60
+
+info-1min:
+cnt 4658
+valid_cnt 4450
+loss_cnt 1153
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2104551
+newest_T 516532.150535962
+start_time 1526709056.3167117
+max_T 60
+
+info-1min:
+cnt 4677
+valid_cnt 4450
+loss_cnt 1272
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2110500
+newest_T 516592.226923382
+start_time 1526709116.3251433
+max_T 60
+
+info-1min:
+cnt 4641
+valid_cnt 4419
+loss_cnt 1300
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2116441
+newest_T 516652.264215413
+start_time 1526709176.4015362
+max_T 60
+
+info-1min:
+cnt 4658
+valid_cnt 4466
+loss_cnt 1080
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2122179
+newest_T 516712.275026222
+start_time 1526709236.4388201
+max_T 60
+
+info-1min:
+cnt 4653
+valid_cnt 4411
+loss_cnt 1341
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2128173
+newest_T 516772.27531514
+start_time 1526709296.449645
+max_T 60
+
+info-10min:
+recv 77.95
+loss 29.75
+dupe 0
+ooo 0
+start_time 1526708756.0993352
+max_T 600
+end_time 1526709356.4497395
+-------
+
+info-1min:
+cnt 4648
+valid_cnt 4422
+loss_cnt 1343
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2134164
+newest_T 516832.339964599
+start_time 1526709356.4504426
+max_T 60
+
+info-1min:
+cnt 4726
+valid_cnt 4526
+loss_cnt 1091
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2139981
+newest_T 516892.416853423
+start_time 1526709416.5146422
+max_T 60
+
+received  b'close'
+received  b'close'
+received  b'close'
+received  b'close'
+received  b'close'
+info-1min:
+cnt 4633
+valid_cnt 4422
+loss_cnt 1228
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2145842
+newest_T 516952.497184416
+start_time 1526709476.5915596
+max_T 60
+
+received  b'close'
+received  b'close'
+received  b'close'
+received  b'close'
+info-1min:
+cnt 4651
+valid_cnt 4425
+loss_cnt 1278
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2151771
+newest_T 517012.51521793
+start_time 1526709536.6717796
+max_T 60
+
+received  b'close'
+received  b'close'
+received  b'close'
+received  b'close'
+info-1min:
+cnt 4672
+valid_cnt 4414
+loss_cnt 1484
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2157927
+newest_T 517072.578960736
+start_time 1526709596.6898303
+max_T 60
+
+received  b'close'
+received  b'close'
+info-1min:
+cnt 4622
+valid_cnt 4357
+loss_cnt 1582
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2164131
+newest_T 517132.62399396
+start_time 1526709656.753587
+max_T 60
+
+info-1min:
+cnt 4707
+valid_cnt 4467
+loss_cnt 1460
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2170298
+newest_T 517192.624316517
+start_time 1526709716.7986495
+max_T 60
+
+received  b'close'
+received  b'close'
+received  b'close'
+info-1min:
+cnt 4658
+valid_cnt 4391
+loss_cnt 1885
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2176841
+newest_T 517252.677114187
+start_time 1526709776.7988014
+max_T 60
+
+info-1min:
+cnt 4626
+valid_cnt 4330
+loss_cnt 2131
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2183605
+newest_T 517312.689963855
+start_time 1526709836.8517976
+max_T 60
+
+info-1min:
+cnt 4640
+valid_cnt 4347
+loss_cnt 2261
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2190506
+newest_T 517372.722254159
+start_time 1526709896.864562
+max_T 60
+
+info-10min:
+recv 78.76666666666667
+loss 37.68333333333333
+dupe 0
+ooo 0
+start_time 1526709356.450446
+max_T 600
+end_time 1526709956.8968225
+-------
+
+info-1min:
+cnt 4636
+valid_cnt 4348
+loss_cnt 2178
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2197320
+newest_T 517432.792277549
+start_time 1526709956.8975656
+max_T 60
+
+received  b'close'
+info-1min:
+cnt 4706
+valid_cnt 4436
+loss_cnt 1652
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2203678
+newest_T 517492.795664373
+start_time 1526710016.96687
+max_T 60
+
+received  b'close'
+info-1min:
+cnt 4397
+valid_cnt 4162
+loss_cnt 1481
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2209556
+newest_T 517552.795569984
+start_time 1526710076.9701295
+max_T 60
+
+received  b'close'
+info-1min:
+cnt 4355
+valid_cnt 4147
+loss_cnt 1115
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2215026
+newest_T 517612.80809435
+start_time 1526710136.9702835
+max_T 60
+
+received  b'close'
+info-1min:
+cnt 4675
+valid_cnt 4415
+loss_cnt 1435
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2221136
+newest_T 517672.887385334
+start_time 1526710196.9827185
+max_T 60
+
+received  b'close'
+info-1min:
+cnt 4164
+valid_cnt 4000
+loss_cnt 892
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2226200
+newest_T 517732.917580124
+start_time 1526710257.061821
+max_T 60
+
+received  b'close'
+info-1min:
+cnt 2482
+valid_cnt 2482
+loss_cnt 0
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2228682
+newest_T 517792.99006382
+start_time 1526710317.0920448
+max_T 60
+
+received  b'close'
+info-1min:
+cnt 3714
+valid_cnt 3647
+loss_cnt 370
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2232766
+newest_T 517853.066680683
+start_time 1526710377.164503
+max_T 60
+
+received  b'close'
+info-1min:
+cnt 4641
+valid_cnt 4390
+loss_cnt 1403
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2238810
+newest_T 517913.127604218
+start_time 1526710437.2411144
+max_T 60
+
+info-1min:
+cnt 4659
+valid_cnt 4392
+loss_cnt 1535
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2245004
+newest_T 517973.180788576
+start_time 1526710497.3020365
+max_T 60
+
+info-10min:
+recv 78.43333333333334
+loss 36.3
+dupe 0
+ooo 0
+start_time 1526709956.8975692
+max_T 600
+end_time 1526710557.3551943
+-------
+
+info-1min:
+cnt 4620
+valid_cnt 4358
+loss_cnt 1573
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2251197
+newest_T 518033.235702556
+start_time 1526710557.3553643
+max_T 60
+
+info-1min:
+cnt 4677
+valid_cnt 4412
+loss_cnt 1467
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2257341
+newest_T 518093.275718958
+start_time 1526710617.410151
+max_T 60
+
+info-1min:
+cnt 4693
+valid_cnt 4431
+loss_cnt 1580
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2263614
+newest_T 518153.318361673
+start_time 1526710677.4501567
+max_T 60
+
+info-1min:
+cnt 4659
+valid_cnt 4379
+loss_cnt 1702
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2269976
+newest_T 518213.371101322
+start_time 1526710737.4927824
+max_T 60
+
+info-1min:
+cnt 4660
+valid_cnt 4410
+loss_cnt 1429
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2276065
+newest_T 518273.414554983
+start_time 1526710797.5455446
+max_T 60
+
+info-1min:
+cnt 4663
+valid_cnt 4422
+loss_cnt 1356
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2282084
+newest_T 518333.448476001
+start_time 1526710857.5889893
+max_T 60
+
+info-1min:
+cnt 4589
+valid_cnt 4324
+loss_cnt 1540
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2288225
+newest_T 518393.49437079
+start_time 1526710917.622899
+max_T 60
+
+info-1min:
+cnt 4625
+valid_cnt 4367
+loss_cnt 1484
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2294334
+newest_T 518453.523047826
+start_time 1526710977.6688037
+max_T 60
+
+info-1min:
+cnt 4604
+valid_cnt 4355
+loss_cnt 1465
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2300404
+newest_T 518513.544897817
+start_time 1526711037.697493
+max_T 60
+
+info-1min:
+cnt 3625
+valid_cnt 3581
+loss_cnt 270
+dup_cnt 0
+mis_order_cnt 0
+cur_val 2304299
+newest_T 518573.555400054
+start_time 1526711097.7193575
+max_T 60
+
+info-10min:
+recv 78.21666666666667
+loss 28.366666666666667
+dupe 0
+ooo 0
+start_time 1526710557.3553653
+max_T 600
+end_time 1526711157.7298002
+-------
+
