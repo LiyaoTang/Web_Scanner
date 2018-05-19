@@ -63,10 +63,10 @@ def collect_1min_info(client, userdata, cur_time):
         print(key, record_tmp[key])
     print()
 
-    recv = record_tmp['cnt']/60
-    loss = record_tmp['loss_cnt']/60
-    dupe = record_tmp['dup_cnt']/60
-    ooo  = record_tmp['mis_order_cnt']/60
+    recv = record_tmp['cnt']
+    loss = record_tmp['loss_cnt'] / record_tmp['cnt']
+    dupe = record_tmp['dup_cnt']  / record_tmp['cnt']
+    ooo  = record_tmp['mis_order_cnt'] / record_tmp['cnt']
 
     if recv > record_long['recv']: record_long['recv'] = recv
     if loss > record_long['loss']: record_long['loss'] = loss
