@@ -36,7 +36,7 @@ init_topic_record = lambda topic, qos :{'1min' : init_tmp_record(),
                                         'topic': topic, 
                                         'qos'  : str(qos)}
 
-def publish_result(client, record_long, record_qos, cur_time, qos=2, rt_f=True, root_topic='studentreport/u6142160/'):
+def publish_result(client, record_long, record_qos, cur_time, qos=2, rt_f=True, root_topic='/studentreport/u6142160/'):
     # t 10-minute intervals under
     # studentreport/<your.Uni.ID>/ with the ‘retain’ flag set and QoS=2.
     
