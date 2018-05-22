@@ -43,7 +43,7 @@ def publish_result(client, record_long, record_qos, cur_time, qos=2, rt_f=True, 
     client.publish(root_topic + 'language', payload='python', qos=qos, retain=rt_f)
     client.publish(root_topic + 'timestamp', payload=cur_time, qos=qos, retain=rt_f)
     for key in ['recv', 'loss', 'dupe', 'ooo']:
-        client.publish(root_topic + str(cur_time) + '/' + record_qos + '/' + key, payload=record_long[key], qos=qos, retain=rt_f)
+        client.publish(root_topic + str(int(cur_time)) + '/' + record_qos + '/' + key, payload=record_long[key], qos=qos, retain=rt_f)
 
     print('info-10min:')
     for key in record_long.keys():
@@ -173,7 +173,7 @@ def on_message_qos_0(client, userdata, msg):
         return
 
     record['cnt'] += 1
-    if msg.timestamp > record['newest_T']: # expected order => increasing number
+    if msg.timestamp > record['newest_T']: # in time series
 
         if cur_val == record['cur_val']+1 or record['cur_val'] == -1 or cur_val == 0: # expected
             # +1 / 1st msg / wrap around

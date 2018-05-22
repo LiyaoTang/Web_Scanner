@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.9.5)  11 MAY 2018 21:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.9.5)  21 MAY 2018 23:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -497,24 +497,86 @@ Package caption Info: hyperref package is loaded.
 Package: subcaption 2016/02/20 v1.1-142 Sub-captions (AR)
 \c@subfigure=\count99
 \c@subtable=\count100
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2016/03/03 v2.15a AMS math features
+\@mathmargin=\skip44
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks17
+\ex@=\dimen116
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen117
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count101
+LaTeX Info: Redefining \frac on input line 199.
+\uproot@=\count102
+\leftroot@=\count103
+LaTeX Info: Redefining \overline on input line 297.
+\classnum@=\count104
+\DOTSCASE@=\count105
+LaTeX Info: Redefining \ldots on input line 394.
+LaTeX Info: Redefining \dots on input line 397.
+LaTeX Info: Redefining \cdots on input line 518.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen118
+LaTeX Font Info:    Redeclaring font encoding OML on input line 630.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
+\macc@depth=\count106
+\c@MaxMatrixCols=\count107
+\dotsspace@=\muskip11
+\c@parentequation=\count108
+\dspbrk@lvl=\count109
+\tag@help=\toks18
+\row@=\count110
+\column@=\count111
+\maxfields@=\count112
+\andhelp@=\toks19
+\eqnshift@=\dimen119
+\alignsep@=\dimen120
+\tagshift@=\dimen121
+\tagwidth@=\dimen122
+\totwidth@=\dimen123
+\lineht@=\dimen124
+\@envbody=\toks20
+\multlinegap=\skip45
+\multlinetaggap=\skip46
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2735.
+LaTeX Info: Redefining \] on input line 2736.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
 ) (./Report.aux)
 \openout1 = `Report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-\AtBeginShipoutBox=\box26
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+\AtBeginShipoutBox=\box28
+
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2016/01/03 v1.1b Standard LaTeX Color (DPC)
 
@@ -523,7 +585,7 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 143.
 )
-Package hyperref Info: Link coloring ON on input line 13.
+Package hyperref Info: Link coloring ON on input line 15.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -531,11 +593,11 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count101
+\c@section@level=\count113
 )
-LaTeX Info: Redefining \ref on input line 13.
-LaTeX Info: Redefining \pageref on input line 13.
-LaTeX Info: Redefining \nameref on input line 13.
+LaTeX Info: Redefining \ref on input line 15.
+LaTeX Info: Redefining \pageref on input line 15.
+LaTeX Info: Redefining \nameref on input line 15.
 
 (./Report.out) (./Report.out)
 \@outlinefile=\write3
@@ -544,17 +606,17 @@ LaTeX Info: Redefining \nameref on input line 13.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count102
-\scratchdimen=\dimen116
-\scratchbox=\box27
-\nofMPsegments=\count103
-\nofMParguments=\count104
-\everyMPshowfont=\toks17
-\MPscratchCnt=\count105
-\MPscratchDim=\dimen117
-\MPnumerator=\count106
-\makeMPintoPDFobject=\count107
-\everyMPtoPDFconversion=\toks18
+\scratchcounter=\count114
+\scratchdimen=\dimen125
+\scratchbox=\box29
+\nofMPsegments=\count115
+\nofMParguments=\count116
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count117
+\MPscratchDim=\dimen126
+\MPnumerator=\count118
+\makeMPintoPDFobject=\count119
+\everyMPtoPDFconversion=\toks23
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -572,15 +634,11 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 16.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 16.
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (12.50185pt too wide) in paragraph at lines 18--18
+Overfull \hbox (12.50185pt too wide) in paragraph at lines 20--20
 []\OT1/cmr/bx/n/17.28 Analysis on Hand-shakes un-der Dif-fer-ent QoS 
  []
 
@@ -588,54 +646,190 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.48 
-      [1] <../Log/handshake-q0.png, id=24, 745.78625pt x 167.62625pt>
-File: ../Log/handshake-q0.png Graphic file (type png)
+l.50 
+      [1]
+<./plots/wire_shark/handshake-q0.png, id=48, 745.78625pt x 167.62625pt>
+File: ./plots/wire_shark/handshake-q0.png Graphic file (type png)
 
-<use ../Log/handshake-q0.png>
-Package pdftex.def Info: ../Log/handshake-q0.png used on input line 53.
+<use ./plots/wire_shark/handshake-q0.png>
+Package pdftex.def Info: ./plots/wire_shark/handshake-q0.png used on input line
+ 55.
 (pdftex.def)             Requested size: 300.30167pt x 67.4969pt.
 
-<../Log/handshake-q1.png, id=26, 744.7825pt x 218.8175pt>
-File: ../Log/handshake-q1.png Graphic file (type png)
+<./plots/wire_shark/handshake-q1.png, id=50, 744.7825pt x 218.8175pt>
+File: ./plots/wire_shark/handshake-q1.png Graphic file (type png)
 
-<use ../Log/handshake-q1.png>
-Package pdftex.def Info: ../Log/handshake-q1.png used on input line 59.
+<use ./plots/wire_shark/handshake-q1.png>
+Package pdftex.def Info: ./plots/wire_shark/handshake-q1.png used on input line
+ 61.
 (pdftex.def)             Requested size: 300.30167pt x 88.22995pt.
 
-<../Log/handshake-q2.png, id=27, 740.7675pt x 311.1625pt>
-File: ../Log/handshake-q2.png Graphic file (type png)
+<./plots/wire_shark/handshake-q2.png, id=51, 740.7675pt x 311.1625pt>
+File: ./plots/wire_shark/handshake-q2.png Graphic file (type png)
 
-<use ../Log/handshake-q2.png>
-Package pdftex.def Info: ../Log/handshake-q2.png used on input line 65.
+<use ./plots/wire_shark/handshake-q2.png>
+Package pdftex.def Info: ./plots/wire_shark/handshake-q2.png used on input line
+ 67.
 (pdftex.def)             Requested size: 300.30167pt x 126.14357pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 74.
- [2 <../Log/handshake-q0.png> <../Log/handshake-q1.png> <../Log/handshake-q2.pn
-g>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 74.
+ [2 <./plots/wire_shark/handshake-q0.png> <./plots/wire_shark/handshake-q1.png>
+ <./plots/wire_shark/handshake-q2.png>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 85.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 85.
+ [3] [4] [5]
+<./plots/valid_cnt/valid_cnt.png, id=81, 1176.395pt x 483.8075pt>
+File: ./plots/valid_cnt/valid_cnt.png Graphic file (type png)
+
+<use ./plots/valid_cnt/valid_cnt.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt.png used on input line 180
+.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-load_publish_dropped_1min.png, id=82, 1176.395pt x
+ 483.8075pt>
+File: ./plots/valid_cnt/valid_cnt-load_publish_dropped_1min.png Graphic file (t
+ype png)
+ <use ./plots/valid_cnt/valid_cnt-load_publish_dropped_1min.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-load_publish_dropped_1min.
+png used on input line 192.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-load_messages_sent_1min.png, id=84, 1176.395pt x 4
+83.8075pt>
+File: ./plots/valid_cnt/valid_cnt-load_messages_sent_1min.png Graphic file (typ
+e png)
+ <use ./plots/valid_cnt/valid_cnt-load_messages_sent_1min.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-load_messages_sent_1min.pn
+g used on input line 202.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-load_messages_received_1min.png, id=85, 1176.395pt
+ x 483.8075pt>
+File: ./plots/valid_cnt/valid_cnt-load_messages_received_1min.png Graphic file 
+(type png)
+
+<use ./plots/valid_cnt/valid_cnt-load_messages_received_1min.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-load_messages_received_1mi
+n.png used on input line 211.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-load_bytes_sent_1min.png, id=86, 1176.395pt x 483.
+8075pt>
+File: ./plots/valid_cnt/valid_cnt-load_bytes_sent_1min.png Graphic file (type p
+ng)
+ <use ./plots/valid_cnt/valid_cnt-load_bytes_sent_1min.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-load_bytes_sent_1min.png u
+sed on input line 221.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-load_bytes_received_1min.png, id=89, 1176.395pt x 
+483.8075pt>
+File: ./plots/valid_cnt/valid_cnt-load_bytes_received_1min.png Graphic file (ty
+pe png)
+ <use ./plots/valid_cnt/valid_cnt-load_bytes_received_1min.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-load_bytes_received_1min.p
+ng used on input line 231.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-load_connections_1min.png, id=90, 1176.395pt x 483
+.8075pt>
+File: ./plots/valid_cnt/valid_cnt-load_connections_1min.png Graphic file (type 
+png)
+ <use ./plots/valid_cnt/valid_cnt-load_connections_1min.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-load_connections_1min.png 
+used on input line 241.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-clients_connected.png, id=91, 1176.395pt x 483.807
+5pt>
+File: ./plots/valid_cnt/valid_cnt-clients_connected.png Graphic file (type png)
+
+ <use ./plots/valid_cnt/valid_cnt-clients_connected.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-clients_connected.png used
+ on input line 250.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-heap_current.png, id=92, 1176.395pt x 483.8075pt>
+File: ./plots/valid_cnt/valid_cnt-heap_current.png Graphic file (type png)
+
+<use ./plots/valid_cnt/valid_cnt-heap_current.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-heap_current.png used on i
+nput line 259.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-heap_maximum.png, id=93, 1176.395pt x 483.8075pt>
+File: ./plots/valid_cnt/valid_cnt-heap_maximum.png Graphic file (type png)
+
+<use ./plots/valid_cnt/valid_cnt-heap_maximum.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-heap_maximum.png used on i
+nput line 268.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-messages_stored.png, id=94, 1176.395pt x 483.8075p
+t>
+File: ./plots/valid_cnt/valid_cnt-messages_stored.png Graphic file (type png)
+ <use ./plots/valid_cnt/valid_cnt-messages_stored.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-messages_stored.png used o
+n input line 276.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-publish_messages_dropped.png, id=95, 1176.395pt x 
+483.8075pt>
+File: ./plots/valid_cnt/valid_cnt-publish_messages_dropped.png Graphic file (ty
+pe png)
+ <use ./plots/valid_cnt/valid_cnt-publish_messages_dropped.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-publish_messages_dropped.p
+ng used on input line 284.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+
+<./plots/valid_cnt/valid_cnt-retained.png, id=96, 1176.395pt x 483.8075pt>
+File: ./plots/valid_cnt/valid_cnt-retained.png Graphic file (type png)
+
+<use ./plots/valid_cnt/valid_cnt-retained.png>
+Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-retained.png used on input
+ line 292.
+(pdftex.def)             Requested size: 390.0pt x 160.38782pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 297.
+ [6] [7 <./plots/valid_cnt/valid_cnt.png> <./plots/valid_cnt/valid_cnt-load_pub
+lish_dropped_1min.png>] [8 <./plots/valid_cnt/valid_cnt-load_messages_sent_1min
+.png> <./plots/valid_cnt/valid_cnt-load_messages_received_1min.png>] [9 <./plot
+s/valid_cnt/valid_cnt-load_bytes_sent_1min.png> <./plots/valid_cnt/valid_cnt-lo
+ad_bytes_received_1min.png>]
+[10 <./plots/valid_cnt/valid_cnt-load_connections_1min.png> <./plots/valid_cnt/
+valid_cnt-clients_connected.png>] [11 <./plots/valid_cnt/valid_cnt-heap_current
+.png> <./plots/valid_cnt/valid_cnt-heap_maximum.png>] [12 <./plots/valid_cnt/va
+lid_cnt-messages_stored.png> <./plots/valid_cnt/valid_cnt-publish_messages_drop
+ped.png>] [13 <./plots/valid_cnt/valid_cnt-retained.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 297.
  (./Report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 74.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 74.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 297.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 297.
 Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 44BA4ACF782E31086BCC22B1C4CE47A5;77.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 74.
+(rerunfilecheck)             Checksum: C9DDFC3F9809460B88F65625132C9F94;561.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 297.
  ) 
 Here is how much of TeX's memory you used:
- 6477 strings out of 493029
- 97982 string characters out of 6136235
- 183977 words of memory out of 5000000
- 9973 multiletter control sequences out of 15000+600000
- 6056 words of font info for 22 fonts, out of 8000000 for 9000
+ 7237 strings out of 493029
+ 109827 string characters out of 6136235
+ 200916 words of memory out of 5000000
+ 10653 multiletter control sequences out of 15000+600000
+ 10233 words of font info for 37 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,8n,39p,523b,476s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,8n,39p,585b,480s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on Report.pdf (3 pages, 250606 bytes).
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on Report.pdf (14 pages, 1163133 bytes).
 PDF statistics:
- 55 PDF objects out of 1000 (max. 8388607)
- 39 compressed objects within 1 object stream
- 8 named destinations out of 1000 (max. 500000)
- 24 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 194 PDF objects out of 1000 (max. 8388607)
+ 137 compressed objects within 2 object streams
+ 41 named destinations out of 1000 (max. 500000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 
