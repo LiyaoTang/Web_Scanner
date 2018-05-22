@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.11.22)  22 MAY 2018 10:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.11.22)  22 MAY 2018 11:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -754,16 +754,23 @@ File: ./plots/valid_cnt/valid_cnt-clients_connected.png Graphic file (type png)
 
 <use ./plots/valid_cnt/valid_cnt-clients_connected.png>
 Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-clients_connected.png  use
-d on input line 251. on input line 251.
+d on input line 250. on input line 250.
 Package pdftex.def Info: Requested size: 390.0pt x 160.38782pt on input line 25
-1.
+0.
 <./plots/valid_cnt/valid_cnt-heap_current.png, id=92, 1176.395pt x 483.8075pt>
 File: ./plots/valid_cnt/valid_cnt-heap_current.png Graphic file (type png)
 <use ./plots/valid_cnt/valid_cnt-heap_current.png>
 Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-heap_current.png  used on 
-input line 261. on input line 261.
+input line 260. on input line 260.
 Package pdftex.def Info: Requested size: 390.0pt x 160.38782pt on input line 26
-1.
+0.
+
+
+LaTeX Warning: Reference `' on page 6 undefined on input line 262.
+
+
+LaTeX Warning: Reference `' on page 6 undefined on input line 262.
+
 <./plots/valid_cnt/valid_cnt-heap_maximum.png, id=93, 1176.395pt x 483.8075pt>
 File: ./plots/valid_cnt/valid_cnt-heap_maximum.png Graphic file (type png)
 <use ./plots/valid_cnt/valid_cnt-heap_maximum.png>
@@ -776,50 +783,53 @@ t>
 File: ./plots/valid_cnt/valid_cnt-messages_stored.png Graphic file (type png)
 <use ./plots/valid_cnt/valid_cnt-messages_stored.png>
 Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-messages_stored.png  used 
-on input line 278. on input line 278.
-Package pdftex.def Info: Requested size: 390.0pt x 160.38782pt on input line 27
-8.
+on input line 280. on input line 280.
+Package pdftex.def Info: Requested size: 390.0pt x 160.38782pt on input line 28
+0.
 <./plots/valid_cnt/valid_cnt-publish_messages_dropped.png, id=95, 1176.395pt x 
 483.8075pt>
 File: ./plots/valid_cnt/valid_cnt-publish_messages_dropped.png Graphic file (ty
 pe png)
 <use ./plots/valid_cnt/valid_cnt-publish_messages_dropped.png>
 Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-publish_messages_dropped.p
-ng  used on input line 286. on input line 286.
+ng  used on input line 288. on input line 288.
 Package pdftex.def Info: Requested size: 390.0pt x 160.38782pt on input line 28
-6.
+8.
 <./plots/valid_cnt/valid_cnt-retained.png, id=96, 1176.395pt x 483.8075pt>
 File: ./plots/valid_cnt/valid_cnt-retained.png Graphic file (type png)
 <use ./plots/valid_cnt/valid_cnt-retained.png>
 Package pdftex.def Info: ./plots/valid_cnt/valid_cnt-retained.png  used on inpu
-t line 294. on input line 294.
+t line 297. on input line 297.
 Package pdftex.def Info: Requested size: 390.0pt x 160.38782pt on input line 29
-4.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 299.
- [6]
-[7 <./plots/valid_cnt/valid_cnt.png> <./plots/valid_cnt/valid_cnt-load_publish_
-dropped_1min.png>] [8 <./plots/valid_cnt/valid_cnt-load_messages_sent_1min.png>
- <./plots/valid_cnt/valid_cnt-load_messages_received_1min.png>] [9 <./plots/val
-id_cnt/valid_cnt-load_bytes_sent_1min.png> <./plots/valid_cnt/valid_cnt-load_by
-tes_received_1min.png>] [10 <./plots/valid_cnt/valid_cnt-load_connections_1min.
-png> <./plots/valid_cnt/valid_cnt-clients_connected.png>] [11 <./plots/valid_cn
-t/valid_cnt-heap_current.png> <./plots/valid_cnt/valid_cnt-heap_maximum.png>]
-[12 <./plots/valid_cnt/valid_cnt-messages_stored.png> <./plots/valid_cnt/valid_
-cnt-publish_messages_dropped.png>] [13 <./plots/valid_cnt/valid_cnt-retained.pn
-g>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 299.
+7.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 302.
+[6] [7 <./plots/valid_cnt/valid_cnt.png> <./plots/valid_cnt/valid_cnt-load_publ
+ish_dropped_1min.png>] [8 <./plots/valid_cnt/valid_cnt-load_messages_sent_1min.
+png> <./plots/valid_cnt/valid_cnt-load_messages_received_1min.png>] [9 <./plots
+/valid_cnt/valid_cnt-load_bytes_sent_1min.png> <./plots/valid_cnt/valid_cnt-loa
+d_bytes_received_1min.png>] [10 <./plots/valid_cnt/valid_cnt-load_connections_1
+min.png> <./plots/valid_cnt/valid_cnt-clients_connected.png>] [11 <./plots/vali
+d_cnt/valid_cnt-heap_current.png> <./plots/valid_cnt/valid_cnt-heap_maximum.png
+>] [12 <./plots/valid_cnt/valid_cnt-messages_stored.png> <./plots/valid_cnt/val
+id_cnt-publish_messages_dropped.png>] [13 <./plots/valid_cnt/valid_cnt-retained
+.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 302.
  (./Report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 299.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 299.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 302.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 302.
 Package rerunfilecheck Info: File `Report.out' has not changed.
 (rerunfilecheck)             Checksum: C9DDFC3F9809460B88F65625132C9F94;561.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 299.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 302.
  ) 
 Here is how much of TeX's memory you used:
- 7217 strings out of 492990
- 109647 string characters out of 6135004
- 199811 words of memory out of 5000000
- 10654 multiletter control sequences out of 15000+600000
+ 7218 strings out of 492990
+ 109649 string characters out of 6135004
+ 200811 words of memory out of 5000000
+ 10655 multiletter control sequences out of 15000+600000
  10233 words of font info for 37 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  36i,8n,39p,585b,478s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -830,7 +840,7 @@ ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on Report.pdf (14 pages, 1139532 bytes).
+Output written on Report.pdf (14 pages, 1140361 bytes).
 PDF statistics:
  194 PDF objects out of 1000 (max. 8388607)
  137 compressed objects within 2 object streams

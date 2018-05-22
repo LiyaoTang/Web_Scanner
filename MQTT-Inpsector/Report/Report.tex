@@ -259,6 +259,7 @@ To measure the performance of the broker along the time series, the number of ex
 	\begin{center}
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-heap_current}	
 	\end{center}
+	It is expected to observe an increasing allocated memory on the broker because intuitively there will be more and more retained messages published from students to the broker; it actually nicely correlates with the number of retained messages or in-queue messages in figure \ref{} and figure \ref{} respectively. It is nontheless unexpected to see those small peaks along its increasing curve, which means there are several memory burst and I could not find any coorelated curves with that in the given time of this assignment.
 \end{figure}
 
 \begin{figure}
@@ -266,9 +267,11 @@ To measure the performance of the broker along the time series, the number of ex
 	\caption{topic: heap/maximum}
 	\label{f:valid_cnt_heap_maximum}
 	\begin{center}
-		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-heap_maximum}	
+		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-heap_maximum}
 	\end{center}
+	The maximum heap memory ever allocated is expected and correlates with the trends of the curve for current heap memory.
 \end{figure}
+
 \begin{figure}
 	\setlength{\tabcolsep}{0pt}
 	\caption{topic: messages/stored}
@@ -276,6 +279,7 @@ To measure the performance of the broker along the time series, the number of ex
 	\begin{center}
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-messages_stored}	
 	\end{center}
+	This is messages held in message store, including retained messages and 
 \end{figure}
 \begin{figure}
 	\setlength{\tabcolsep}{0pt}
@@ -285,6 +289,7 @@ To measure the performance of the broker along the time series, the number of ex
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-publish_messages_dropped}	
 	\end{center}
 \end{figure}
+
 \begin{figure}
 	\setlength{\tabcolsep}{0pt}
 	\caption{topic: retained}
@@ -294,6 +299,7 @@ To measure the performance of the broker along the time series, the number of ex
 	\end{center}
 \end{figure}
 
+inflight ?
 
 \end{document}
 
