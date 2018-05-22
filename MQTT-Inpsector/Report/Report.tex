@@ -6,6 +6,30 @@
 \usepackage{subcaption}
 \usepackage{amsmath}
 \usepackage{placeins}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=Java,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
 \graphicspath{ {./plots/} }
 
 \title{Analysis Report on Inspecting MQTT}
@@ -46,7 +70,7 @@ Figure \ref{fig:handshake_snap_shot} shows the required screenshots. QoS defines
 	
 \end{enumerate}
 
-As listed above, those assisting messages that is not compulsory for application to meet its specification can transmit on QoS level 0; whereas those key messages, which may results in deviation from the specification if not received, should transmit under QoS level 1; while some important messages whose not only payload but also occurrence matter should transmit under QoS level 2 because duplicate messages are not applicable under this circumstance.
+As listed above, those assisting messages that is not compulsory for application to meet its specification can transmit on QoS level 0; whereas those key messages, which may results in deviation from the specification if not received, should transmit under QoS level 1; while some important messages whose not only payload but also occurrence matter should transmit under QoS level 2 because duplicate messages are not allowed under this circumstance.
 
 \begin{figure}
 	\centering
@@ -78,7 +102,7 @@ As listed above, those assisting messages that is not compulsory for application
 
 \subsubsection{Code Structure and Explanation}
 
-The code is written in python3.6.4, using MQTT library and several other standard python libraries, including OptionParser, time, sys and gc.
+The code is written in python3.6.4, using MQTT library and several other standard python libraries, including OptionParser, time, sys and gc. Especially, MQTT library should be under the same directory of the python script, as configured in my submitted package.
 
 The code takes two compulsory command line parameters, explained as follow:
 \begin{itemize}
@@ -93,6 +117,36 @@ If the script subscribes to one of the fast channels, it will collect the static
 If the script subscribes to the "\$SYS/broker" topic, it will write whatever it receives into a local log file with a local time-stamp.
 
 In practice, four scripts will run in parallel, outputting into separate files, referring to the local time on the same computer when time-stamping messages. It is shown that the script is able to run for days with a nearly constant memory consumption on a PC.
+
+\subsubsection{Examples to Run the Code}
+
+\begin{itemize}
+\item Run the python script:
+
+	\begin{itemize}
+		\item to subscribe to topic: counter/fast/q0:
+			\begin{verbatim}
+			python ./Inspector.py --speed fast --qos 0	
+			\end{verbatim}
+				
+		\item to collect statics from \$SYS\ broker\ \#:
+			\begin{verbatim}
+			python ./Inspector.py --speed SYS --qos 2
+			\end{verbatim}
+	\end{itemize}
+
+\item Run the python script in parallel:
+	
+	I provide a simple bash script, which needs to be placed under the same directory with the python script "Inspector.py" and requires a "./Log" directory in its directory. The script will subscribe to topics "counter/fast/q0", "counter/fast/q1", "counter/fast/q2" and "\$SYS\ broker\ \#"; and output the log into corresponding files under "./Log", with a time stamp of its starting time as postfix of each log.
+	
+	To run the script in background:
+	\begin{verbatim}
+	bash scan_channel.sh &
+	\end{verbatim}
+	
+\end{itemize}
+
+
 
 \subsubsection{Statics Definition}
 
@@ -167,7 +221,9 @@ Besides the required fields, there are other topics analysed in the following an
 
 Convention of plotting in this section is that the information collected by clients are plotted in either blue, orange or green while the SYS statics are in red. The related discussions are placed under each graph and cross-referenced.
 
-\subsubsection{Expected Messages Correlating with \$SYS}
+\subsubsection{1-min Expected Messages Correlating with \$SYS}
+\label{s:1min_expected_msg}
+
 To measure the performance of the broker along the time series, the number of expected messages over 1 minute under each QoS level are plotted into graphs. In order to show the correlation with SYS statics, the SYS statics are re-scaled appropriately so that the trends and details of both number of expected messages and the SYS statics can be expressed. 
 
 \FloatBarrier
@@ -192,7 +248,7 @@ To measure the performance of the broker along the time series, the number of ex
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-load_publish_dropped_1min}
 	
 	\end{center}
-	It is observed that, surprisingly, the dropped messages largely correlates with the number of received expected messages, except for the fifth; it yet is reasonable because each peak is actually a publishing peak (shown in next figure \ref{f:valid_cnt_load_messages_sent_1min}), when the message dropping is severe as expected due to the jam.
+	It is observed that, surprisingly, the dropped messages largely correlates with the number of received expected messages, except for the fifth and jitters in the latter part (after the 3rd x-tick); it is reasonable because each peak is actually a publishing peak (in figure \ref{f:valid_cnt_load_messages_sent_1min}), when messages is dropped due to the jam. It is also noticed that curves for expected received messages has more jitters in the latter part as well, correlating with the dropped/1min curve.
 \end{figure}
 
 \begin{figure}
@@ -240,6 +296,7 @@ To measure the performance of the broker along the time series, the number of ex
 	\begin{center}
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-load_connections_1min}	
 	\end{center}
+	There is a burst of client requesting to connect but it seems to not correlate those jitters, indicating CONNECT packets itself would not have any instant impact.
 \end{figure}
 
 \begin{figure}
@@ -249,7 +306,7 @@ To measure the performance of the broker along the time series, the number of ex
 	\begin{center}
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-clients_connected}	
 	\end{center}
-	It is clear now in this figure that the number of active clients coorelates with those small peaks, or previously refered as jitters, where broker needs to send more messages and bytes out; and it is reasonable that broker sends more at when more clients connect and receive messages from broker, especially they may receive messages from other topic then topics subscribed by my clients, i.e. slow channel.
+	It is clear now in this figure that the number of active clients coorelates with those small peaks, or previously referred as jitters, where broker needs to send more messages and bytes out; and it is reasonable that broker sends more at when more clients connect and receive messages from broker, especially they may receive messages from other topic then topics subscribed by my clients, i.e. slow channel.
 \end{figure}
 
 \begin{figure}
@@ -259,7 +316,7 @@ To measure the performance of the broker along the time series, the number of ex
 	\begin{center}
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-heap_current}	
 	\end{center}
-	It is expected to observe an increasing allocated memory on the broker because intuitively there will be more and more retained messages published from students to the broker; it actually nicely correlates with the number of retained messages or in-queue messages in figure \ref{} and figure \ref{} respectively. It is nontheless unexpected to see those small peaks along its increasing curve, which means there are several memory burst and I could not find any coorelated curves with that in the given time of this assignment.
+	It is expected to observe an increasing allocated memory on the broker because intuitively there will be more and more retained messages published from students to the broker; it actually nicely correlates with the number of retained messages in figure \ref{f:valid_cnt_retained} as expected. It is yet unexpected to see those small peaks along its increasing, denoting several memory burst and I could not find any coorelated curves with that in the given time of this assignment. It also seems to not correlate with the number of received expected messages.
 \end{figure}
 
 \begin{figure}
@@ -279,17 +336,8 @@ To measure the performance of the broker along the time series, the number of ex
 	\begin{center}
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-messages_stored}	
 	\end{center}
-	This is messages held in message store, including retained messages and 
+	This is messages held in message store, including retained messages and in-queue messages waiting for delivery and being acknowledged under QoS level 1 and 2, which, as expected, correlates with retained messages and current heap memory, and seems to not correlate with the number of received expected messages.
 \end{figure}
-\begin{figure}
-	\setlength{\tabcolsep}{0pt}
-	\caption{topic: publish/messages/dropped}
-	\label{f:valid_cnt_publish_messages_dropped}
-	\begin{center}
-		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-publish_messages_dropped}	
-	\end{center}
-\end{figure}
-
 \begin{figure}
 	\setlength{\tabcolsep}{0pt}
 	\caption{topic: retained}
@@ -297,9 +345,161 @@ To measure the performance of the broker along the time series, the number of ex
 	\begin{center}
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-retained}	
 	\end{center}
+	The number of retained messages seems to be held in the heap memory and not correlates with or affects the expected messages received by clients or 
 \end{figure}
 
-inflight ?
+\begin{figure}
+	\setlength{\tabcolsep}{0pt}
+	\caption{topic: publish/messages/dropped}
+	\label{f:valid_cnt_publish_messages_dropped}
+	\begin{center}
+		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-publish_messages_dropped}	
+	\end{center}
+	This is the total number of dropped messages due to inflight/queuing limits since the start, which is unexpected to not correlates with the number of clients' received expected messages, the received messages on the broker or the current heap memory allocated on the broker. The potential reason might be that the queues are allocated with a specialised memory instead of on the heap memory.
+\end{figure}
+
+\FloatBarrier
+\subsubsection{10-min Loss Rate Correlating with \$SYS}
+In this section, instead of using the total received expected message over 1 minute, we analyse the broker performance with loss rate, calculated with equation \ref{eq:loss_rate}. The out-of-order rate or duplicate rate are not analysed because they are too rare and thus do not have sufficient data.
+
+It is surprising that during the period of this measurement, QoS level 0 is found to have 0 loss and QoS level 2 has a loss rate close to 0, compared to QoS level 1. Hence, the following graph will contain only curves from QoS level 1 and 2 on the background.
+
+Similar to that in previous section \ref{s:1min_expected_msg}, the discussions are under each corresponding figure.
+
+\FloatBarrier
+\begin{figure}
+	\setlength{\tabcolsep}{0pt}
+	\caption{10-min loss rate under QoS 0,1,2}
+	\label{f:loss_cnt}
+	\begin{center}		
+		\includegraphics[width=\textwidth]{loss_cnt/loss} 
+	\end{center}
+	As convention, the blue, orange and green curves are 10-min expected messages number under QoS level respectively 0, 1 and 2. The loss rate of QoS level 0 is 0 and level 2 close to 0. Thus we only show the loss rate curve of QoS level 1 when comparing with SYS statics.
+\end{figure}
+
+\begin{figure}
+	\setlength{\tabcolsep}{0pt}
+	\caption{topic: load/publish/dropped/5min}
+	\label{f:loss_cnt_load_publish_dropped_5min}
+	\begin{center}
+		
+		\includegraphics[width=\textwidth]{loss_cnt/loss-load_publish_dropped_5min}
+		
+	\end{center}
+	It is observed that the dropped messages correlates with the loss rate as expected. It is interesting that the server becomes more and more stressed as the time goes, uncovered by the density of peaks in loss rate, which is denser in the latter part.
+\end{figure}
+
+\begin{figure}
+	\caption{topic: load/messages/sent/5min}
+	\label{f:loss_cnt_load_messages_sent_5min}
+	\begin{center}
+		\includegraphics[width=\textwidth]{loss_cnt/loss-load_messages_sent_5min}
+	\end{center}
+	The loss rate curve barely correlates with the sending messages statics from broker. When broker needs to send more messages at latter part, the loss rate curve has more peaks. Or, in the other word, the more it needs to send, the more likely clients have lost messages.
+\end{figure}
+
+\begin{figure}
+	\caption{topic: load/messages/received/5min}
+	\label{f:loss_cnt_load_messages_received_5min}
+	\begin{center}
+		\includegraphics[width=\textwidth]{loss_cnt/loss-load_messages_received_5min}   
+	\end{center}
+	The curve for received messages at broker seems not to correlate with the loss rate curve, which is expected because the received messages are largely from counter on a relatively steady pace.
+\end{figure}
+
+\begin{figure}
+	\setlength{\tabcolsep}{0pt}
+	\caption{topic: load/bytes/sent/5min}
+	\label{f:loss_cnt_load_bytes_sent_5min}
+	\begin{center}
+		\includegraphics[width=\textwidth]{loss_cnt/loss-load_bytes_sent_5min}      
+	\end{center}
+	Apart from the correlation within SYS statics, (discussed in figure \ref{f:valid_cnt_load_bytes_sent_1min}), it also largely correlate with the loss rate curve, which is reasonable as more burden on the broker's task of sending will result in more loss rate.
+\end{figure}
+
+\begin{figure}
+	\setlength{\tabcolsep}{0pt}
+	\caption{topic: load/bytes/received/5min}
+	\label{f:loss_cnt_load_bytes_received_5min}
+	\begin{center}
+		\includegraphics[width=\textwidth]{loss_cnt/loss-load_bytes_received_5min}  
+	\end{center}
+	This figure becomes interesting because curve for received bytes starts from largely correlating with loss rate curve and then ends up with not quite correlated. Such phenomenon is understandable because the received bytes over 5 minutes should reveal the burden of the broker's task of handling messages and denominates the loss rate, until another factor, the number of client, becomes large enough to affect the loss rate in the latter of this record. 
+\end{figure}
+
+\begin{figure}
+	\setlength{\tabcolsep}{0pt}
+	\caption{topic: load/connections/5min}
+	\label{f:loss_cnt_load_connections_5min}
+	\begin{center}
+		\includegraphics[width=\textwidth]{loss_cnt/loss-load_connections_5min} 
+	\end{center}
+	Similar to previous section, the CONNECT packets do not directly impact or correlate with the clients' statics, loss rate in this case.
+\end{figure}
+
+\begin{figure}
+	\setlength{\tabcolsep}{0pt}
+	\caption{topic: clients/connected}
+	\label{f:loss_cnt_clients_connected}
+	\begin{center}
+		\includegraphics[width=\textwidth]{loss_cnt/loss-clients_connected} 
+	\end{center}
+	As discussed in previous section \ref{s:1min_expected_msg}, the active clients are a key role in influencing broker's performance. We observe and expect to observe that as more clients connected to the broker in the latter part, more peaks in loss rate curve show up.
+\end{figure}
+
+\begin{figure}
+	\setlength{\tabcolsep}{0pt}
+	\caption{topic: heap/current}
+	\label{f:loss_cnt_heap_current}
+	\begin{center}
+		\includegraphics[width=\textwidth]{loss_cnt/loss-heap_current}  
+	\end{center}
+	As discussed in previous section \ref{s:1min_expected_msg}, the current heap memory correlates with the number of both retained and stored messages in broker and also the maximum heap memory used. Yet it is not considered correlated with clients' statics, loss rate in this case. Hence, for simplicity, the analysis for correlation between loss rate curve and curves for topics of heap/maximum, messages/stored and retained are not shown here; and the result is the same as the analysis between curves for expected messages and those topics.
+\end{figure}
+
+\FloatBarrier
+\section{Analysis and Correlation between Students' Report}
+
+
+\section{Real-World Analysis}
+Consider the broader end-to-end network environment, in a situation with many thousands of
+sensors publishing regularly to some large number of subscribers. Explain in your report
+
+\subsection{Performance Challenges}
+
+\subsubsection{End-network: Sources and Clients}
+The challenge at source would be dependent on actual task. In the case of master-slave model, where the source are only responsible for publishing messages and performs only one-way communication, the challenge for CPU and memory of source are small, because it only needs to support its own use. It is yet challenging for sources to dynamically recognise and adapt to the clients requirement or constraint. Such challenge will transit to the clients, whose CPU and memory should be able to catch up with the sources and cope with potential incoming messages burst. 
+
+While in the case where two-way communication between clients and sources exists, the challenge of adapting to each other are reduced; nonetheless the sources need to cope with different requirement from various clients, which can forms a challenge for the sources' ability of offering the services in different forms or under different conditions in parallel.
+
+The network challenge here is the well-known last-mile challenge. The last-mile network can be under different situation and exposed to various noise, which potentially requires the sources and clients to be aware of such condition if used in the IoT / IoE architecture.
+
+\subsection{Intermediate: Broker}
+
+The broker in MQTT becomes a bottleneck, also known as single failure point, of the overall performance. It is because all the messages need to first collected into the broker and then distributed to the corresponding clients in their preferred way.
+
+As also mentioned in challenges for sources, the broker needs to have enough ability to provide three different services. It also becomes a huge challenge for CPU and memory on the broker because even if a few sources happen to have a output burst it will add up and potentially arrives together on the broker. 
+
+The memory consumption is another challenge because not only messages on the fly needs enough space for itself or acknowledgement, but also retained messages are likely to constantly take up spaces on the broker and might cause the service to degrade when free memory is low.
+
+The network at the broker is crucial, because the network is not only more likely to be jammed because of output burst from the sources, but also can heavily influence the efficiency of broker's sending out the messages in queue. If the outgoing network is always not as efficient as the incoming network, the broker's limited memory is going to run out eventually.
+
+\subsection{Different QoS Levels for Challenges}
+
+To ease the pain of sources not knowing the performance limit on clients, QoS level 1 or 2 can be helpful, depending on if the occurrence of message matters, as discussed under figure \ref{fig:handshake_snap_shot}. Because in QoS level 1 or 2, broker handles the acknowledgement of the messages on behalf of the sender.
+
+However, QoS level 1 or 2 can brings server burden onto the broker, because messages need to take up the resources on broker both longer and more. Such burden may add up to a point where broker needs to break the specification in protocol due to physical limits.
+
+To prevent the bottleneck from limiting the overall performance, it is suggested to use QoS level 0, where sources and clients may need to handle the acknowledgement and adaptation by themselves. In return, the broker is able to have less CPU and memory burden. Nonetheless, it is worth noting that the network burden may not be reduced or may even be enhanced if clients and sources decide to handle acknowledgement by themselves. Overall, QoS level 0 can reduce the broker's stress.
+
+\subsection{Comparison with Measurement}
+
+Interestingly, regarding averaged 10-min loss rate, the QoS level 0 performs the best, with 0.0 10-min loss rate; the QoS level 2 the second, with 1.4 10-min loss rate; and the QoS level 1 the worst, with 5259 10-min loss rate. While regarding the number of received expected messages, QoS level 0 , 1 and 2 reaches an average of 5842, 4620 and 2203 over 1-min interval during the measurement. The measurement here are all from 2018-05-19 21:17:50 to 2018-05-20 20:22:14, measured in parallel.
+
+It is expected that QoS level 0 actually performs the best because that part of broker is able to cater everybody on a nearly constant pace as the incoming speed is almost constant and the number of clients are roughly 500 according to the SYS statics. Given a relatively stable network environment in ANU (thanks to network team), the performance is close to perfect as expected. Hence, QoS level 0 might be able to send at a comparable speed with the speed for incoming messages from counter; and thus achieving a 0.0 loss rate and the most messages received on average.
+
+It is yet unexpected that the QoS level 2 would outperforms the level 1, regarding the loss rate. The proposed reason is that the sources publish message in QoS level 1 and may jam the corresponding memory more often because it does not care the duplication. In other word, QoS level 2 is able to stop for a little while because of its 4-way handshake, whereas in QoS level 1 there is no gap between the publish of two numbers, causing the broker to be under a relatively high burden in terms of available slots in messages queue.
+
+The above proposed reason is also consistent with the total expected messages each QoS level receives. That is, the QoS level 1 receives much more than that of QoS level 2 in 1-min interval and thus operating in high speed and stressing the broker out more often and QoS level 2 receives on average only a half of the QoS level 1 over the 1-min interval.
 
 \end{document}
-

@@ -210,7 +210,7 @@ def subscribe_counter(client, userdata, speed, qos, topic=None):
     while(sub_rst != mqtt.MQTT_ERR_SUCCESS):
         sub_rst, _ = client.subscribe(topic, qos=qos)
             
-    # init record after successfullt subscribe => deteministic time shift of actual successful subscribe
+    # init record after successfully subscribe => deteministic time shift of actual successful subscribe
     userdata = init_topic_record(topic, qos)
     client.user_data_set(userdata)
 
