@@ -230,7 +230,7 @@ To measure the performance of the broker along the time series, the number of ex
 	\begin{center}
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-load_bytes_received_1min}	
 	\end{center}
-	It is however interesting that the messages received by the broker is not consistent with those outgoing peaks. Then why would broker suddenly needs to send bigger and more messages?
+	It is however interesting that the messages received by the broker is not consistent with those outgoing peaks, especially those jitters. Then why would broker suddenly needs to send bigger and more messages?
 \end{figure}
 
 \begin{figure}
@@ -240,7 +240,6 @@ To measure the performance of the broker along the time series, the number of ex
 	\begin{center}
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-load_connections_1min}	
 	\end{center}
-	
 \end{figure}
 
 \begin{figure}
@@ -250,6 +249,7 @@ To measure the performance of the broker along the time series, the number of ex
 	\begin{center}
 		\includegraphics[width=\textwidth]{valid_cnt/valid_cnt-clients_connected}	
 	\end{center}
+	It is clear now in this figure that the number of active clients coorelates with those small peaks, or previously refered as jitters, where broker needs to send more messages and bytes out; and it is reasonable that broker sends more at when more clients connect and receive messages from broker, especially they may receive messages from other topic then topics subscribed by my clients, i.e. slow channel.
 \end{figure}
 
 \begin{figure}
